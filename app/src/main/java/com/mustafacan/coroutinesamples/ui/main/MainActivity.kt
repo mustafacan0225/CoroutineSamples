@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples
+package com.mustafacan.coroutinesamples.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,10 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoroutineSamplesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    MainScreen(innerPadding)
                 }
             }
         }
@@ -38,7 +35,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+
 @Composable
 fun GreetingPreview() {
     CoroutineSamplesTheme {
