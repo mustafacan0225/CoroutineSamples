@@ -32,10 +32,13 @@ fun MainScreen(innerPadding: PaddingValues) {
 
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(modifier = Modifier.padding(end = 5.dp), onClick = {
+                coroutineScope.launch {
+                    viewModel.dispatcherSamples()
+                }
             }) {
                 Text(
                     modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
-                    text = "Button"
+                    text = "Start"
                 )
             }
         }
