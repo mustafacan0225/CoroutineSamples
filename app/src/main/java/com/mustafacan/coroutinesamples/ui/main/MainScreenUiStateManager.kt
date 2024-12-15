@@ -5,6 +5,7 @@ import com.mustafacan.coroutinesamples.model.Bird
 import com.mustafacan.coroutinesamples.model.Cat
 import com.mustafacan.coroutinesamples.model.Dog
 import com.mustafacan.coroutinesamples.ui.base.UiStateManager
+import java.util.Calendar
 
 
 class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScreenState, MainScreenUiStateManager.MainScreenEvent, MainScreenUiStateManager.MainScreenEffect> {
@@ -19,6 +20,8 @@ class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScre
         data class ErrorDogs(val errorMessage: String) : MainScreenEvent()
         data class ErrorCats(val errorMessage: String) : MainScreenEvent()
         data class ErrorBirds(val errorMessage: String) : MainScreenEvent()
+        object LoadingStarted : MainScreenEvent()
+        object LoadingCompleted : MainScreenEvent()
     }
 
     @Immutable
@@ -32,6 +35,8 @@ class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScre
         val errorMessageForDogs: String? = null,
         val errorMessageForCats: String? = null,
         val errorMessageForBirds: String? = null,
+        val loadingStartedTime: Long? = null,
+        val completionInfo: String? = null
     ) : UiStateManager.ViewState {
         companion object {
             fun initial(): MainScreenState {
@@ -86,6 +91,16 @@ class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScre
 
             is MainScreenEvent.ErrorBirds -> {
                 previousState.copy(loadingBirds = false, errorMessageForBirds = event.errorMessage, birdList = null) to null
+            }
+
+            is MainScreenEvent.LoadingStarted -> {
+                previousState.copy(loadingStartedTime = Calendar.getInstance().timeInMillis, completionInfo = null) to null
+            }
+
+            is MainScreenEvent.LoadingCompleted -> {
+                val completionTime = (Calendar.getInstance().timeInMillis - previousState.loadingStartedTime!!) / 1000
+                val completionInfo = "Completion time for all task -> $completionTime seconds"
+                previousState.copy(loadingStartedTime = Calendar.getInstance().timeInMillis, completionInfo = completionInfo) to null
             }
 
         }
