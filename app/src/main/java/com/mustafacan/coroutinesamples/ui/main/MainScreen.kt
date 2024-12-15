@@ -15,13 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mustafacan.coroutinesamples.ui.main.viewmodels.DispatcherViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(innerPadding: PaddingValues) {
-    val viewModel = MainScreenViewModel()
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val viewModel = DispatcherViewModel()
     val coroutineScope = rememberCoroutineScope()
     Column(
         Modifier
@@ -38,7 +37,7 @@ fun MainScreen(innerPadding: PaddingValues) {
             }) {
                 Text(
                     modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
-                    text = "Start"
+                    text = "Start Dispatcher Logs"
                 )
             }
         }

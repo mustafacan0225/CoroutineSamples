@@ -1,20 +1,15 @@
-package com.mustafacan.coroutinesamples.ui.main
+package com.mustafacan.coroutinesamples.ui.main.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mustafacan.coroutinesamples.ui.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainScreenViewModel :
-    BaseViewModel<MainScreenUiStateManager.MainScreenState, MainScreenUiStateManager.MainScreenEvent,
-            MainScreenUiStateManager.MainScreenEffect>(
-        initialState = MainScreenUiStateManager.MainScreenState.initial(),
-        uiStateManager = MainScreenUiStateManager()
-    ) {
+class DispatcherViewModel : ViewModel() {
 
     suspend fun dispatcherSamples() {
         viewModelScope.launch {
