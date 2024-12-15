@@ -1,46 +1,12 @@
 package com.mustafacan.coroutinesamples.ui.main
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.mustafacan.coroutinesamples.ui.main.viewmodels.DispatcherViewModel
-import kotlinx.coroutines.launch
+import com.mustafacan.coroutinesamples.ui.main.screen.DispatcherScreen
 
 @Composable
-fun MainScreen(innerPadding: PaddingValues) {
-    val viewModel = DispatcherViewModel()
-    val coroutineScope = rememberCoroutineScope()
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-    ) {
-        Spacer(modifier = Modifier.height(15.dp))
+fun MainScreen() {
 
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Button(modifier = Modifier.padding(end = 5.dp), onClick = {
-                coroutineScope.launch {
-                    viewModel.dispatcherSamples()
-                }
-            }) {
-                Text(
-                    modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
-                    text = "Start Dispatcher Logs"
-                )
-            }
-        }
+    /******* Dispatcher Sample ********/
+    DispatcherScreen()
 
-    }
 }
