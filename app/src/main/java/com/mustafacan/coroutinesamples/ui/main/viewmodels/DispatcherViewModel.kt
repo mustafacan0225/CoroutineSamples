@@ -8,8 +8,10 @@ import com.mustafacan.coroutinesamples.ui.model.DispatcherUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 class DispatcherViewModel :
     BaseViewModel<DispatcherUiStateManager.DispatcherScreenState, DispatcherUiStateManager.DispatcherScreenEvent,
@@ -51,6 +53,16 @@ class DispatcherViewModel :
             Log.d("coroutine", "GlobalScope: Thread -> ${Thread.currentThread().name}")
             sendEvent(DispatcherUiStateManager.DispatcherScreenEvent.AddDispatcherInfo(DispatcherUiModel(dispatcherName = "GlobalScope", threadName = "${Thread.currentThread().name}")))
         }.join()
+
+        coroutineScope {
+            Log.d("coroutine", "coroutineScope: Thread -> ${Thread.currentThread().name}")
+            sendEvent(DispatcherUiStateManager.DispatcherScreenEvent.AddDispatcherInfo(DispatcherUiModel(dispatcherName = "coroutineScope", threadName = "${Thread.currentThread().name}")))
+        }
+
+        supervisorScope {
+            Log.d("coroutine", "supervisorScope: Thread -> ${Thread.currentThread().name}")
+            sendEvent(DispatcherUiStateManager.DispatcherScreenEvent.AddDispatcherInfo(DispatcherUiModel(dispatcherName = "supervisorScope", threadName = "${Thread.currentThread().name}")))
+        }
     }
 
     fun clearLog() {
