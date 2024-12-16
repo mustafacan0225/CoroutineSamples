@@ -99,7 +99,7 @@ class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScre
 
             is MainScreenEvent.LoadingCompleted -> {
                 val completionTime = (Calendar.getInstance().timeInMillis - previousState.loadingStartedTime!!) / 1000
-                val completionInfo = "Completion time for all task -> $completionTime seconds"
+                val completionInfo = "$completionTime seconds"
                 previousState.copy(loadingStartedTime = Calendar.getInstance().timeInMillis, completionInfo = completionInfo) to null
             }
 

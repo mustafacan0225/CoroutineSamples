@@ -9,17 +9,17 @@ object MockRepository {
 
     suspend fun getCats() : List<Cat> {
         delay(2000)
-        return listOf(Cat(name = "Persian", temperament = "Sweet, Gentle, Quiet"))
+        return listOf(Cat(name = "Maine Coon", temperament = "Frendly, Gentle, Playful", image = "https://cdn.pixabay.com/photo/2023/09/06/17/03/maine-coon-8237571_1280.jpg"))
     }
 
     suspend fun getBirds() : List<Bird> {
-        delay(2500)
-        return listOf(Bird(name = "Eagle", habitat = "Tropical Rainforests"))
+        delay(3000)
+        return listOf(Bird(name = "Crowned Crane", habitat = "Wetlands and grasslands", image = "https://cdn.pixabay.com/photo/2021/10/27/10/41/grey-crowned-crane-6746726_1280.jpg"))
     }
 
     suspend fun getDogs() : List<Dog> {
         delay(5000)
-        return listOf(Dog(name = "Golden Retriever", origin = "Scotland"))
+        return listOf(Dog(name = "Golden Retriever", origin = "Scotland", image = "https://cdn.pixabay.com/photo/2019/06/22/19/01/golden-retriever-4292254_1280.jpg"))
     }
 
     suspend fun getCatsWithError() : List<Cat> {
@@ -28,7 +28,7 @@ object MockRepository {
     }
 
     suspend fun getBirdsWithError() : List<Bird> {
-        delay(2500)
+        delay(3000)
         throw RuntimeException("An error occurred while loading birds")
     }
 

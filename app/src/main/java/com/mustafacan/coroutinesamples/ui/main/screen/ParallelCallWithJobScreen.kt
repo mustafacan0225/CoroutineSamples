@@ -17,9 +17,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafacan.coroutinesamples.ui.main.MainScreenUiStateManager
 import com.mustafacan.coroutinesamples.ui.main.screen.birds.BirdsContent
@@ -33,39 +38,47 @@ fun ParallelCallWithJobScreen() {
     val viewModel = ParallelCallWithJobViewModel()
     val coroutineScope = rememberCoroutineScope()
     val state = viewModel.state.collectAsStateWithLifecycle()
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-    ) {
-        Spacer(modifier = Modifier.height(15.dp))
+    Column(Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 10.dp)) {
+        Text(text = "Parallel Call With Job", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(10.dp))
         DogsContent(state = state)
         CatsContent(state = state)
         BirdsContent(state = state)
-        Row(modifier = Modifier.fillMaxWidth().padding(top = 15.dp), horizontalArrangement = Arrangement.Center) {
+
+        CompletionTimeInfo(state = state)
+
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 15.dp), horizontalArrangement = Arrangement.Center) {
             Button(modifier = Modifier.padding(end = 5.dp), onClick = {
-                coroutineScope.launch {
-                    viewModel.getAllData()
-                }
+                coroutineScope.launch { viewModel.getAllData() }
             }) {
                 Text(
                     modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
                     text = "Fetch Data"
                 )
             }
-
         }
-
-        CompletionTimeInfo(state = state)
-
     }
 }
 
 @Composable
 fun CompletionTimeInfo(state: State<MainScreenUiStateManager.MainScreenState>) {
     state.value.completionInfo?.let {
+
         Text(modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 15.dp), text = it, textAlign = TextAlign.Center, fontWeight = FontWeight.Black)
+            .padding(top = 15.dp), text = buildAnnotatedString {
+            append("Completion time: ")
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 20.sp,
+                    color = Color.Red,
+                    fontWeight = FontWeight.Bold
+                )
+            ) { // AnnotatedString.Builder
+                append(it)
+            }
+        }, textAlign = TextAlign.Center)
     }
 }
