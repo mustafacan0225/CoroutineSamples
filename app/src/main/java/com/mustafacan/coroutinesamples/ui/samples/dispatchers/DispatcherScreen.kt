@@ -70,7 +70,7 @@ fun DispatcherContent(
                 items(state.value.dispatcherInfoList) {
                     Column(modifier = Modifier.fillMaxWidth().padding(10.dp)) {
                         Text(modifier=Modifier.fillMaxWidth(), text = "${it.dispatcherName}", textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
-                        Text(modifier=Modifier.fillMaxWidth(), text = "Thread: ${it.threadName}", textAlign = TextAlign.Center)
+                        Text(modifier=Modifier.fillMaxWidth(), text = "works on ${it.threadName} thread", textAlign = TextAlign.Center)
                     }
 
                 }
