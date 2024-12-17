@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples.ui.main
+package com.mustafacan.coroutinesamples.ui.samples
 
 import androidx.compose.runtime.Immutable
 import com.mustafacan.coroutinesamples.model.Bird
@@ -8,24 +8,24 @@ import com.mustafacan.coroutinesamples.ui.base.UiStateManager
 import java.util.Calendar
 
 
-class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScreenState, MainScreenUiStateManager.MainScreenEvent, MainScreenUiStateManager.MainScreenEffect> {
+class AnimalsUiStateManager: UiStateManager<AnimalsUiStateManager.AnimalsScreenState, AnimalsUiStateManager.AnimalsScreenEvent, AnimalsUiStateManager.AnimalsScreenEffect> {
     @Immutable
-    sealed class MainScreenEvent : UiStateManager.ViewEvent {
-        object LoadingDogs : MainScreenEvent()
-        object LoadingCats : MainScreenEvent()
-        object LoadingBirds : MainScreenEvent()
-        data class CompletedDogs(val dogList: List<Dog>) : MainScreenEvent()
-        data class CompletedCats(val catList: List<Cat>) : MainScreenEvent()
-        data class CompletedBirds(val birdList: List<Bird>) : MainScreenEvent()
-        data class ErrorDogs(val errorMessage: String) : MainScreenEvent()
-        data class ErrorCats(val errorMessage: String) : MainScreenEvent()
-        data class ErrorBirds(val errorMessage: String) : MainScreenEvent()
-        object LoadingStarted : MainScreenEvent()
-        object LoadingCompleted : MainScreenEvent()
+    sealed class AnimalsScreenEvent : UiStateManager.ViewEvent {
+        object LoadingDogs : AnimalsScreenEvent()
+        object LoadingCats : AnimalsScreenEvent()
+        object LoadingBirds : AnimalsScreenEvent()
+        data class CompletedDogs(val dogList: List<Dog>) : AnimalsScreenEvent()
+        data class CompletedCats(val catList: List<Cat>) : AnimalsScreenEvent()
+        data class CompletedBirds(val birdList: List<Bird>) : AnimalsScreenEvent()
+        data class ErrorDogs(val errorMessage: String) : AnimalsScreenEvent()
+        data class ErrorCats(val errorMessage: String) : AnimalsScreenEvent()
+        data class ErrorBirds(val errorMessage: String) : AnimalsScreenEvent()
+        object LoadingStarted : AnimalsScreenEvent()
+        object LoadingCompleted : AnimalsScreenEvent()
     }
 
     @Immutable
-    data class MainScreenState(
+    data class AnimalsScreenState(
         val loadingDogs: Boolean? = null,
         val loadingCats: Boolean? = null,
         val loadingBirds: Boolean? = null,
@@ -39,65 +39,65 @@ class MainScreenUiStateManager: UiStateManager<MainScreenUiStateManager.MainScre
         val completionInfo: String? = null
     ) : UiStateManager.ViewState {
         companion object {
-            fun initial(): MainScreenState {
-                return MainScreenState()
+            fun initial(): AnimalsScreenState {
+                return AnimalsScreenState()
             }
         }
     }
 
     @Immutable
-    sealed class MainScreenEffect : UiStateManager.ViewEffect {
+    sealed class AnimalsScreenEffect : UiStateManager.ViewEffect {
 
     }
 
     override fun handleEvent(
-        previousState: MainScreenState,
-        event: MainScreenEvent
-    ): Pair<MainScreenState, MainScreenEffect?> {
+        previousState: AnimalsScreenState,
+        event: AnimalsScreenEvent
+    ): Pair<AnimalsScreenState, AnimalsScreenEffect?> {
 
         return when (event) {
 
-            is MainScreenEvent.LoadingDogs -> {
+            is AnimalsScreenEvent.LoadingDogs -> {
                 previousState.copy(loadingDogs = true, dogList = null, errorMessageForDogs = null) to null
             }
 
-            is MainScreenEvent.LoadingCats -> {
+            is AnimalsScreenEvent.LoadingCats -> {
                 previousState.copy(loadingCats = true, catList = null, errorMessageForCats = null) to null
             }
 
-            is MainScreenEvent.LoadingBirds -> {
+            is AnimalsScreenEvent.LoadingBirds -> {
                 previousState.copy(loadingBirds = true, birdList = null, errorMessageForBirds = null) to null
             }
 
-            is MainScreenEvent.CompletedDogs -> {
+            is AnimalsScreenEvent.CompletedDogs -> {
                 previousState.copy(loadingDogs = false, dogList = event.dogList, errorMessageForDogs = null) to null
             }
 
-            is MainScreenEvent.CompletedCats -> {
+            is AnimalsScreenEvent.CompletedCats -> {
                 previousState.copy(loadingCats = false, catList = event.catList, errorMessageForCats = null) to null
             }
 
-            is MainScreenEvent.CompletedBirds -> {
+            is AnimalsScreenEvent.CompletedBirds -> {
                 previousState.copy(loadingBirds = false, birdList = event.birdList, errorMessageForBirds = null) to null
             }
 
-            is MainScreenEvent.ErrorDogs -> {
+            is AnimalsScreenEvent.ErrorDogs -> {
                 previousState.copy(loadingDogs = false, errorMessageForDogs = event.errorMessage, dogList = null) to null
             }
 
-            is MainScreenEvent.ErrorCats -> {
+            is AnimalsScreenEvent.ErrorCats -> {
                 previousState.copy(loadingCats = false, errorMessageForCats = event.errorMessage, catList = null) to null
             }
 
-            is MainScreenEvent.ErrorBirds -> {
+            is AnimalsScreenEvent.ErrorBirds -> {
                 previousState.copy(loadingBirds = false, errorMessageForBirds = event.errorMessage, birdList = null) to null
             }
 
-            is MainScreenEvent.LoadingStarted -> {
+            is AnimalsScreenEvent.LoadingStarted -> {
                 previousState.copy(loadingStartedTime = Calendar.getInstance().timeInMillis, completionInfo = null) to null
             }
 
-            is MainScreenEvent.LoadingCompleted -> {
+            is AnimalsScreenEvent.LoadingCompleted -> {
                 val completionTime = (Calendar.getInstance().timeInMillis - previousState.loadingStartedTime!!) / 1000
                 val completionInfo = "$completionTime seconds"
                 previousState.copy(loadingStartedTime = Calendar.getInstance().timeInMillis, completionInfo = completionInfo) to null

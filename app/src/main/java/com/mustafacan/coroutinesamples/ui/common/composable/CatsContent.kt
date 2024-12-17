@@ -1,7 +1,6 @@
-package com.mustafacan.coroutinesamples.ui.main.screen.dogs
+package com.mustafacan.coroutinesamples.ui.common.composable
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,17 +24,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.mustafacan.coroutinesamples.ui.main.MainScreenUiStateManager
-import com.mustafacan.coroutinesamples.ui.util.CircleImage
+import com.mustafacan.coroutinesamples.ui.samples.AnimalsUiStateManager
 
 @Composable
-fun DogsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
+fun CatsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
     Column(
         Modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .padding(vertical = 10.dp)
     ) {
-        Text(text = "Dogs Content")
+        Text(text = "Cats Content")
         Spacer(modifier = Modifier.height(5.dp))
         Card(
             modifier = Modifier
@@ -49,7 +48,7 @@ fun DogsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                 modifier = Modifier.padding(10.dp, 25.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                state.value.loadingDogs?.let {
+                state.value.loadingCats?.let {
                     if (it) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             CircularProgressIndicator(modifier = Modifier.padding(10.dp))
@@ -58,13 +57,12 @@ fun DogsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                                 text = "Loading, please wait..."
                             )
                         }
-
                     }
                 }
 
-                state.value.errorMessageForDogs?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForCats?.let { Text(text = "Error Message: $it") }
 
-                state.value.dogList?.let {
+                state.value.catList?.let {
                     val animal = it.get(0)
                     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
 
@@ -76,15 +74,10 @@ fun DogsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                         )
 
                         Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
-                            //Text("Dogs size: ${it.size}")
                             Text("${animal.name}", fontWeight = FontWeight.Bold)
-                            Text("${animal.origin}")
+                            Text("${animal.temperament}")
                         }
-
                     }
-
-
-
                 }
 
             }

@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples.ui.main.viewmodels
+package com.mustafacan.coroutinesamples.ui.samples.parallelcallwithasync
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -6,17 +6,17 @@ import com.mustafacan.coroutinesamples.ui.base.BaseViewModel
 import com.mustafacan.coroutinesamples.ui.data.MockRepository.getBirds
 import com.mustafacan.coroutinesamples.ui.data.MockRepository.getCats
 import com.mustafacan.coroutinesamples.ui.data.MockRepository.getDogs
-import com.mustafacan.coroutinesamples.ui.main.MainScreenUiStateManager
+import com.mustafacan.coroutinesamples.ui.samples.AnimalsUiStateManager
 import com.mustafacan.coroutinesamples.ui.model.AnimalsUiModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class ParallelCallWithAsyncViewModel :
-    BaseViewModel<MainScreenUiStateManager.MainScreenState, MainScreenUiStateManager.MainScreenEvent,
-            MainScreenUiStateManager.MainScreenEffect>(
-        initialState = MainScreenUiStateManager.MainScreenState.initial(),
-        uiStateManager = MainScreenUiStateManager()
+    BaseViewModel<AnimalsUiStateManager.AnimalsScreenState, AnimalsUiStateManager.AnimalsScreenEvent,
+            AnimalsUiStateManager.AnimalsScreenEffect>(
+        initialState = AnimalsUiStateManager.AnimalsScreenState.initial(),
+        uiStateManager = AnimalsUiStateManager()
     ) {
 
     init {
@@ -56,17 +56,17 @@ class ParallelCallWithAsyncViewModel :
     }
 
     fun startLoading() {
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingStarted)
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingDogs)
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingCats)
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingBirds)
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingStarted)
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
     }
 
     fun completedFetchData(animals: AnimalsUiModel) {
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.CompletedDogs(animals.dogs))
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.CompletedCats(animals.cats))
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.CompletedBirds(animals.birds))
-        sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingCompleted)
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(animals.dogs))
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(animals.cats))
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(animals.birds))
+        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCompleted)
     }
 
 

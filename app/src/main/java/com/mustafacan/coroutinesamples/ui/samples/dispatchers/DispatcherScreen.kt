@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples.ui.main.screen
+package com.mustafacan.coroutinesamples.ui.samples.dispatchers
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,8 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mustafacan.coroutinesamples.ui.main.DispatcherUiStateManager
-import com.mustafacan.coroutinesamples.ui.main.viewmodels.DispatcherViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,12 +30,12 @@ fun DispatcherScreen() {
     val viewModel = DispatcherViewModel()
     val state = viewModel.state.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
-    DispatcherContent(printLogClicked = {
+    DispatcherContent(dispatcherInfoClicked = {
         coroutineScope.launch {
             viewModel.clearLog()
             viewModel.dispatcherSamples()
         }
-    }, clearLogClicked = {
+    }, clearDispatcherInfoClicked = {
         viewModel.clearLog()
     }, state = state)
 
@@ -45,8 +43,8 @@ fun DispatcherScreen() {
 
 @Composable
 fun DispatcherContent(
-    printLogClicked: () -> Unit,
-    clearLogClicked: () -> Unit,
+    dispatcherInfoClicked: () -> Unit,
+    clearDispatcherInfoClicked: () -> Unit,
     state: State<DispatcherUiStateManager.DispatcherScreenState>
 ) {
 
@@ -55,13 +53,13 @@ fun DispatcherContent(
         Text(modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, text = "Dispatcher Sample", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Row(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.Center) {
             Button(modifier = Modifier.padding(end = 5.dp),
-                onClick = { printLogClicked() }) {
+                onClick = { dispatcherInfoClicked() }) {
                 Text(modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp), text = "Dispatcher Info")
             }
 
             Button(modifier = Modifier.padding(end = 5.dp),
                 colors = ButtonColors(containerColor = Color.Red, contentColor = Color.White, disabledContainerColor = Color.Gray, disabledContentColor = Color.LightGray),
-                onClick = { clearLogClicked() }) {
+                onClick = { clearDispatcherInfoClicked() }) {
                 Text(modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp), text = "Clear")
             }
         }

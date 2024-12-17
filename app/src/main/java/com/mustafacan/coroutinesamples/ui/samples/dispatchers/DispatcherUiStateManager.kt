@@ -1,9 +1,8 @@
-package com.mustafacan.coroutinesamples.ui.main
+package com.mustafacan.coroutinesamples.ui.samples.dispatchers
 
 import androidx.compose.runtime.Immutable
 import com.mustafacan.coroutinesamples.ui.base.UiStateManager
 import com.mustafacan.coroutinesamples.ui.model.DispatcherUiModel
-import java.util.Calendar
 
 class DispatcherUiStateManager: UiStateManager<DispatcherUiStateManager.DispatcherScreenState, DispatcherUiStateManager.DispatcherScreenEvent, DispatcherUiStateManager.DispatcherScreenEffect> {
     @Immutable

@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples.ui.util
+package com.mustafacan.coroutinesamples.ui.common.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment

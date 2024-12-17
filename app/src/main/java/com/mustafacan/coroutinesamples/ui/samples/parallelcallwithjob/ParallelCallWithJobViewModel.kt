@@ -1,17 +1,17 @@
-package com.mustafacan.coroutinesamples.ui.main.viewmodels
+package com.mustafacan.coroutinesamples.ui.samples.parallelcallwithjob
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mustafacan.coroutinesamples.ui.base.BaseViewModel
 import com.mustafacan.coroutinesamples.ui.data.MockRepository
-import com.mustafacan.coroutinesamples.ui.main.MainScreenUiStateManager
+import com.mustafacan.coroutinesamples.ui.samples.AnimalsUiStateManager
 import kotlinx.coroutines.launch
 
 class ParallelCallWithJobViewModel :
-    BaseViewModel<MainScreenUiStateManager.MainScreenState, MainScreenUiStateManager.MainScreenEvent,
-            MainScreenUiStateManager.MainScreenEffect>(
-        initialState = MainScreenUiStateManager.MainScreenState.initial(),
-        uiStateManager = MainScreenUiStateManager()
+    BaseViewModel<AnimalsUiStateManager.AnimalsScreenState, AnimalsUiStateManager.AnimalsScreenEvent,
+            AnimalsUiStateManager.AnimalsScreenEffect>(
+        initialState = AnimalsUiStateManager.AnimalsScreenState.initial(),
+        uiStateManager = AnimalsUiStateManager()
     ) {
 
     init {
@@ -21,28 +21,28 @@ class ParallelCallWithJobViewModel :
     fun getAllData() {
 
         viewModelScope.launch {
-            sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingStarted)
+            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingStarted)
             val jobDogs = launch {
                 Log.d("coroutine:", "started dogs")
-                sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingDogs)
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
                 val list = MockRepository.getDogs()
-                sendEvent(MainScreenUiStateManager.MainScreenEvent.CompletedDogs(list))
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
                 Log.d("coroutine:", "completed dogs")
             }
 
             val jobCats = launch {
                 Log.d("coroutine:", "started cats")
-                sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingCats)
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
                 val list = MockRepository.getCats()
-                sendEvent(MainScreenUiStateManager.MainScreenEvent.CompletedCats(list))
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
                 Log.d("coroutine:", "completed cats")
             }
 
             val jobBirds = launch {
                 Log.d("coroutine:", "started birds")
-                sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingBirds)
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
                 val list = MockRepository.getBirds()
-                sendEvent(MainScreenUiStateManager.MainScreenEvent.CompletedBirds(list))
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
                 Log.d("coroutine:", "completed birds")
             }
 
@@ -54,7 +54,7 @@ class ParallelCallWithJobViewModel :
             jobCats.join()
             jobBirds.join()
 
-            sendEvent(MainScreenUiStateManager.MainScreenEvent.LoadingCompleted)
+            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCompleted)
             Log.d("coroutine:", "data fetch completed")
             Log.d("coroutine:", "jobDogs.isActive ${jobDogs.isActive}, jobDogs.isCompleted ${jobDogs.isCompleted}")
             Log.d("coroutine:", "jobCats.isActive ${jobCats.isActive}, jobCats.isCompleted ${jobCats.isCompleted}")

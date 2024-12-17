@@ -1,9 +1,8 @@
-package com.mustafacan.coroutinesamples.ui.main.viewmodels
+package com.mustafacan.coroutinesamples.ui.samples.dispatchers
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mustafacan.coroutinesamples.ui.base.BaseViewModel
-import com.mustafacan.coroutinesamples.ui.main.DispatcherUiStateManager
 import com.mustafacan.coroutinesamples.ui.model.DispatcherUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

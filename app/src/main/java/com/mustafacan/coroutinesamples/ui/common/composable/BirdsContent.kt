@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples.ui.main.screen.cats
+package com.mustafacan.coroutinesamples.ui.common.composable
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -24,18 +24,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.mustafacan.coroutinesamples.ui.main.MainScreenUiStateManager
-import com.mustafacan.coroutinesamples.ui.util.CircleImage
+import com.mustafacan.coroutinesamples.ui.samples.AnimalsUiStateManager
 
 @Composable
-fun CatsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
+fun BirdsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
     Column(
         Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(vertical = 10.dp)
     ) {
-        Text(text = "Cats Content")
+        Text(text = "Birds Content")
         Spacer(modifier = Modifier.height(5.dp))
         Card(
             modifier = Modifier
@@ -49,7 +48,7 @@ fun CatsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                 modifier = Modifier.padding(10.dp, 25.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                state.value.loadingCats?.let {
+                state.value.loadingBirds?.let {
                     if (it) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             CircularProgressIndicator(modifier = Modifier.padding(10.dp))
@@ -61,9 +60,9 @@ fun CatsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                     }
                 }
 
-                state.value.errorMessageForCats?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForBirds?.let { Text(text = "Error Message: $it") }
 
-                state.value.catList?.let {
+                state.value.birdList?.let {
                     val animal = it.get(0)
                     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
 
@@ -76,8 +75,9 @@ fun CatsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
 
                         Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
                             Text("${animal.name}", fontWeight = FontWeight.Bold)
-                            Text("${animal.temperament}")
+                            Text("${animal.habitat}")
                         }
+
                     }
                 }
 

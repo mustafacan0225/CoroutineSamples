@@ -1,4 +1,4 @@
-package com.mustafacan.coroutinesamples.ui.main.screen.birds
+package com.mustafacan.coroutinesamples.ui.common.composable
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -24,18 +24,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.mustafacan.coroutinesamples.ui.main.MainScreenUiStateManager
-import com.mustafacan.coroutinesamples.ui.util.CircleImage
+import com.mustafacan.coroutinesamples.ui.samples.AnimalsUiStateManager
 
 @Composable
-fun BirdsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
+fun DogsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
     Column(
         Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(vertical = 10.dp)
     ) {
-        Text(text = "Birds Content")
+        Text(text = "Dogs Content")
         Spacer(modifier = Modifier.height(5.dp))
         Card(
             modifier = Modifier
@@ -49,7 +47,7 @@ fun BirdsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                 modifier = Modifier.padding(10.dp, 25.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                state.value.loadingBirds?.let {
+                state.value.loadingDogs?.let {
                     if (it) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             CircularProgressIndicator(modifier = Modifier.padding(10.dp))
@@ -58,12 +56,13 @@ fun BirdsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                                 text = "Loading, please wait..."
                             )
                         }
+
                     }
                 }
 
-                state.value.errorMessageForBirds?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForDogs?.let { Text(text = "Error Message: $it") }
 
-                state.value.birdList?.let {
+                state.value.dogList?.let {
                     val animal = it.get(0)
                     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
 
@@ -75,11 +74,15 @@ fun BirdsContent(state: State<MainScreenUiStateManager.MainScreenState>) {
                         )
 
                         Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
+                            //Text("Dogs size: ${it.size}")
                             Text("${animal.name}", fontWeight = FontWeight.Bold)
-                            Text("${animal.habitat}")
+                            Text("${animal.origin}")
                         }
 
                     }
+
+
+
                 }
 
             }
