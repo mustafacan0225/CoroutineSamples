@@ -60,7 +60,7 @@ fun CatsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
                     }
                 }
 
-                state.value.errorMessageForCats?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForCats?.let { ErrorText(error = it) }
 
                 state.value.catList?.let {
                     val animal = it.get(0)

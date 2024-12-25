@@ -3,6 +3,9 @@ package com.mustafacan.coroutinesamples.ui.data
 import com.mustafacan.coroutinesamples.model.Bird
 import com.mustafacan.coroutinesamples.model.Cat
 import com.mustafacan.coroutinesamples.model.Dog
+import com.mustafacan.coroutinesamples.ui.model.CustomExceptionBirds
+import com.mustafacan.coroutinesamples.ui.model.CustomExceptionCats
+import com.mustafacan.coroutinesamples.ui.model.CustomExceptionDogs
 import kotlinx.coroutines.delay
 
 object MockRepository {
@@ -24,17 +27,17 @@ object MockRepository {
 
     suspend fun getCatsWithError() : List<Cat> {
         delay(2000)
-        throw RuntimeException("An error occurred while loading cats")
+        throw CustomExceptionCats("An error occurred while loading cats")
     }
 
     suspend fun getBirdsWithError() : List<Bird> {
         delay(3000)
-        throw RuntimeException("An error occurred while loading birds")
+        throw CustomExceptionBirds("An error occurred while loading birds")
     }
 
     suspend fun getDogsWithError() : List<Dog> {
         delay(5000)
-        throw RuntimeException("An error occurred while loading dogs")
+        throw CustomExceptionDogs("An error occurred while loading dogs")
     }
 
 }

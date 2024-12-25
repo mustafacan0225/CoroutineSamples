@@ -60,7 +60,7 @@ fun BirdsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
                     }
                 }
 
-                state.value.errorMessageForBirds?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForBirds?.let { ErrorText(error = it) }
 
                 state.value.birdList?.let {
                     val animal = it.get(0)

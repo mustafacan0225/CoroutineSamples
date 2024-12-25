@@ -60,7 +60,7 @@ fun DogsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
                     }
                 }
 
-                state.value.errorMessageForDogs?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForDogs?.let { ErrorText(error = it) }
 
                 state.value.dogList?.let {
                     val animal = it.get(0)
@@ -74,7 +74,6 @@ fun DogsContent(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
                         )
 
                         Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
-                            //Text("Dogs size: ${it.size}")
                             Text("${animal.name}", fontWeight = FontWeight.Bold)
                             Text("${animal.origin}")
                         }

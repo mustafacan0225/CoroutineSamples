@@ -22,7 +22,7 @@ fun CompletionTimeInfo(state: State<AnimalsUiStateManager.AnimalsScreenState>) {
 
         Text(modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 15.dp), text = buildAnnotatedString {
+            .padding(top = 8.dp), text = buildAnnotatedString {
             append("Completion time: ")
             withStyle(
                 style = SpanStyle(

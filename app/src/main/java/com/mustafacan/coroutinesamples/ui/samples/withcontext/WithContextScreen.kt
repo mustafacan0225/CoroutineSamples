@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafacan.coroutinesamples.ui.common.composable.CircleImage
+import com.mustafacan.coroutinesamples.ui.common.composable.ErrorText
 import kotlinx.coroutines.launch
 
 @Composable
@@ -149,7 +150,7 @@ fun CatsContent(state: State<WithContextUiStateManager.WithContextScreenState>) 
                     }
                 }
 
-                state.value.errorMessageForCats?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForCats?.let { ErrorText(error = it) }
 
                 state.value.catList?.let {
                     val animal = it.get(0)
@@ -209,7 +210,7 @@ fun DogsContent(state: State<WithContextUiStateManager.WithContextScreenState>) 
                     }
                 }
 
-                state.value.errorMessageForDogs?.let { Text(text = "Error Message: $it") }
+                state.value.errorMessageForDogs?.let { ErrorText(error = it) }
 
                 state.value.dogList?.let {
                     val animal = it.get(0)

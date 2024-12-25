@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mustafacan.coroutinesamples.ui.home.HomeScreen
+import androidx.navigation.toRoute
+import com.mustafacan.coroutinesamples.ui.samplelist.SampleListScreen
 import com.mustafacan.coroutinesamples.ui.samples.dispatchers.DispatcherScreen
+import com.mustafacan.coroutinesamples.ui.samples.exceptionhandler.CoroutineExceptionHandlerScreen
 import com.mustafacan.coroutinesamples.ui.samples.parallelcallwithasync.ParallelCallWithAsyncScreen
 import com.mustafacan.coroutinesamples.ui.samples.parallelcallwithjob.ParallelCallWithJobScreen
 import com.mustafacan.coroutinesamples.ui.samples.withcontext.MultipleWithContextScreen
@@ -17,10 +19,10 @@ fun NavigationMain() {
 
     NavHost(
         navController = navController,
-        startDestination = NavDestinationItem.Home
+        startDestination = NavDestinationItem.SampleListScreen
     ) {
-        composable<NavDestinationItem.Home> {
-            HomeScreen(navController = navController)
+        composable<NavDestinationItem.SampleListScreen> {
+            SampleListScreen(navController = navController)
         }
 
         composable<NavDestinationItem.DispatcherSample> {
@@ -41,6 +43,11 @@ fun NavigationMain() {
 
         composable<NavDestinationItem.MultipleWithContext> {
             MultipleWithContextScreen()
+        }
+
+        composable<NavDestinationItem.CoroutineExceptionHandler> {
+            val args = it.toRoute<NavDestinationItem.CoroutineExceptionHandler>()
+            CoroutineExceptionHandlerScreen(args.sampleType, args.sampleTitle)
         }
 
 

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class NavDestinationItem(val title: String? = null) {
     @Serializable
-    object Home : NavDestinationItem()
+    object SampleListScreen : NavDestinationItem()
 
     @Serializable
     object DispatcherSample : NavDestinationItem("Dispatchers Sample")
@@ -21,4 +21,8 @@ sealed class NavDestinationItem(val title: String? = null) {
 
     @Serializable
     object MultipleWithContext : NavDestinationItem("Multiple WithContext Sample")
+
+    @Serializable
+    data class CoroutineExceptionHandler(val sampleType: String, val sampleTitle: String) : NavDestinationItem(sampleTitle)
+
 }
