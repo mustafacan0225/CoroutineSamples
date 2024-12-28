@@ -17,7 +17,7 @@ class AnimalsUiStateManager: UiStateManager<AnimalsUiStateManager.AnimalsScreenS
         data class CompletedDogs(val dogList: List<Dog>) : AnimalsScreenEvent()
         data class CompletedCats(val catList: List<Cat>) : AnimalsScreenEvent()
         data class CompletedBirds(val birdList: List<Bird>) : AnimalsScreenEvent()
-        data class ErrorDogs(val errorMessage: String) : AnimalsScreenEvent()
+        data class ErrorDogs(val errorMessage: String, var isAppendable: Boolean = false) : AnimalsScreenEvent()
         data class ErrorCats(val errorMessage: String) : AnimalsScreenEvent()
         data class ErrorBirds(val errorMessage: String) : AnimalsScreenEvent()
         object LoadingStarted : AnimalsScreenEvent()
@@ -82,7 +82,12 @@ class AnimalsUiStateManager: UiStateManager<AnimalsUiStateManager.AnimalsScreenS
             }
 
             is AnimalsScreenEvent.ErrorDogs -> {
-                previousState.copy(loadingDogs = false, errorMessageForDogs = event.errorMessage, dogList = null) to null
+                val currentMessage = previousState.errorMessageForDogs
+                val errorMessage = if (event.isAppendable && currentMessage!= null) {
+                    currentMessage + "\n---------\n" + event.errorMessage
+                } else
+                    event.errorMessage
+                previousState.copy(loadingDogs = false, errorMessageForDogs = errorMessage, dogList = null) to null
             }
 
             is AnimalsScreenEvent.ErrorCats -> {

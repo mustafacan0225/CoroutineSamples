@@ -14,7 +14,7 @@ sealed class NavDestinationItem(val title: String? = null) {
     object ParallelCallWithJob : NavDestinationItem("Parallel Call With Job")
 
     @Serializable
-    object ParallelCallWithAsync : NavDestinationItem("Parallel Call With Async")
+    data class ParallelCallWithAsync(val sampleType: String, val sampleTitle: String) : NavDestinationItem(sampleTitle)
 
     @Serializable
     object WithContext : NavDestinationItem("WithContext Sample")
@@ -25,4 +25,6 @@ sealed class NavDestinationItem(val title: String? = null) {
     @Serializable
     data class CoroutineExceptionHandler(val sampleType: String, val sampleTitle: String) : NavDestinationItem(sampleTitle)
 
+    @Serializable
+    data class CoroutineCancellationSample(val sampleType: String, val sampleTitle: String) : NavDestinationItem(sampleTitle)
 }

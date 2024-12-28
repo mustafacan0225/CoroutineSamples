@@ -23,7 +23,41 @@ class ParallelCallWithAsyncViewModel :
         Log.d("initVM", "ParallelCallWithAsyncViewModel")
     }
 
-    suspend fun getAllAnimals() : AnimalsUiModel {
+    suspend fun parallelCallWithAsync() {
+        viewModelScope.launch {
+            startLoading()
+
+            val deferredDogs = async {
+                getDogs()
+            }
+
+            val deferredCats = async {
+                getCats()
+            }
+
+            val deferredBirds = async {
+                getBirds()
+            }
+
+            val dogList = deferredDogs.await()
+            val catList = deferredCats.await()
+            val birdList = deferredBirds.await()
+
+            val animals = AnimalsUiModel(dogList, catList, birdList)
+
+            completedFetchData(animals)
+        }
+    }
+
+    fun getAllAnimals() {
+        viewModelScope.launch {
+            startLoading()
+            val animals = coroutineScopeWithAsync()
+            completedFetchData(animals)
+        }
+    }
+
+    suspend fun coroutineScopeWithAsync() : AnimalsUiModel {
         return coroutineScope {
             val deferredDogs = async {
                 getDogs()
@@ -46,15 +80,6 @@ class ParallelCallWithAsyncViewModel :
 
     }
 
-
-    fun getAllData() {
-        viewModelScope.launch {
-            startLoading()
-            val animals = getAllAnimals()
-            completedFetchData(animals)
-        }
-    }
-
     fun startLoading() {
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingStarted)
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
@@ -68,6 +93,4 @@ class ParallelCallWithAsyncViewModel :
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(animals.birds))
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCompleted)
     }
-
-
 }

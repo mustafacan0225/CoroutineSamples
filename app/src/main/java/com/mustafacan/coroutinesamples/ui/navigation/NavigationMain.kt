@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.mustafacan.coroutinesamples.ui.samplelist.SampleListScreen
+import com.mustafacan.coroutinesamples.ui.samples.cancellation.CoroutineCancellationScreen
 import com.mustafacan.coroutinesamples.ui.samples.dispatchers.DispatcherScreen
 import com.mustafacan.coroutinesamples.ui.samples.exceptionhandler.CoroutineExceptionHandlerScreen
 import com.mustafacan.coroutinesamples.ui.samples.parallelcallwithasync.ParallelCallWithAsyncScreen
@@ -34,7 +35,8 @@ fun NavigationMain() {
         }
 
         composable<NavDestinationItem.ParallelCallWithAsync> {
-            ParallelCallWithAsyncScreen()
+            val args = it.toRoute<NavDestinationItem.ParallelCallWithAsync>()
+            ParallelCallWithAsyncScreen(args.sampleType, args.sampleTitle)
         }
 
         composable<NavDestinationItem.WithContext> {
@@ -48,6 +50,11 @@ fun NavigationMain() {
         composable<NavDestinationItem.CoroutineExceptionHandler> {
             val args = it.toRoute<NavDestinationItem.CoroutineExceptionHandler>()
             CoroutineExceptionHandlerScreen(args.sampleType, args.sampleTitle)
+        }
+
+        composable<NavDestinationItem.CoroutineCancellationSample> {
+            val args = it.toRoute<NavDestinationItem.CoroutineCancellationSample>()
+            CoroutineCancellationScreen(args.sampleType, args.sampleTitle)
         }
 
 

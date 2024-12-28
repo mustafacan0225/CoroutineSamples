@@ -83,7 +83,7 @@ fun WithContextInfo(state: State<WithContextUiStateManager.WithContextScreenStat
                 )
             ) { appendLine("Before withContext") }
             append("$it")
-        }, fontSize = 14.sp, textAlign = TextAlign.Center)
+        }, textAlign = TextAlign.Center)
     }
 
     state.value.afterWithContext?.let {
@@ -94,7 +94,7 @@ fun WithContextInfo(state: State<WithContextUiStateManager.WithContextScreenStat
                 )
             ) { appendLine("After withContext") }
             append("$it")
-        }, fontSize = 14.sp, textAlign = TextAlign.Center)
+        }, textAlign = TextAlign.Center)
     }
 
 }

@@ -23,32 +23,22 @@ class ParallelCallWithJobViewModel :
         viewModelScope.launch {
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingStarted)
             val jobDogs = launch {
-                Log.d("coroutine:", "started dogs")
                 sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
                 val list = MockRepository.getDogs()
                 sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
-                Log.d("coroutine:", "completed dogs")
             }
 
             val jobCats = launch {
-                Log.d("coroutine:", "started cats")
                 sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
                 val list = MockRepository.getCats()
                 sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
-                Log.d("coroutine:", "completed cats")
             }
 
             val jobBirds = launch {
-                Log.d("coroutine:", "started birds")
                 sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
                 val list = MockRepository.getBirds()
                 sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
-                Log.d("coroutine:", "completed birds")
             }
-
-            Log.d("coroutine:", "jobDogs.isActive ${jobDogs.isActive}, jobDogs.isCompleted ${jobDogs.isCompleted}")
-            Log.d("coroutine:", "jobCats.isActive ${jobCats.isActive}, jobCats.isCompleted ${jobCats.isCompleted}")
-            Log.d("coroutine:", "jobBirds.isActive ${jobBirds.isActive}, jobBirds.isCompleted ${jobBirds.isCompleted}")
 
             jobDogs.join()
             jobCats.join()

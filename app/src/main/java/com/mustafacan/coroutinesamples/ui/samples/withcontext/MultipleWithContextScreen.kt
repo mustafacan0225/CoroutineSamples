@@ -42,7 +42,7 @@ fun MultipleWithContextScreen() {
 
         CompletionTimeInfo(state = state)
 
-        Text(modifier = Modifier.fillMaxWidth().padding(top = 15.dp), text = "Note: multiple withContext, runs sequentially", fontWeight = FontWeight.Bold, color = Color.Blue, textAlign = TextAlign.Center, fontSize = 14.sp)
+        Text(modifier = Modifier.fillMaxWidth().padding(top = 15.dp), text = "Note: multiple withContext, runs sequentially", fontWeight = FontWeight.Bold, color = Color.Blue, textAlign = TextAlign.Center)
 
         Button(modifier = Modifier
             .padding(top = 15.dp)

@@ -8,6 +8,7 @@ import com.mustafacan.coroutinesamples.ui.samples.AnimalsUiStateManager
 import com.mustafacan.coroutinesamples.ui.model.CustomExceptionBirds
 import com.mustafacan.coroutinesamples.ui.model.CustomExceptionCats
 import com.mustafacan.coroutinesamples.ui.model.CustomExceptionDogs
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -49,27 +50,21 @@ class CoroutineExceptionHandlerViewModel :
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingStarted)
         val scope = CoroutineScope(SupervisorJob() + exceptionHandler)
         scope.launch {
-            Log.d("coroutine:", "started dogs")
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
             val list = MockRepository.getDogs()
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
-            Log.d("coroutine:", "completed dogs")
         }
 
         scope.launch {
-            Log.d("coroutine:", "started cats")
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
             val list = MockRepository.getCats()
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
-            Log.d("coroutine:", "completed cats")
         }
 
         scope.launch {
-            Log.d("coroutine:", "started birds")
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
             val list = MockRepository.getBirdsWithError()
             sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
-            Log.d("coroutine:", "completed birds")
         }
 
     }
@@ -79,27 +74,35 @@ class CoroutineExceptionHandlerViewModel :
 
         val scope = CoroutineScope(Job() + exceptionHandler)
         val jobDogs = scope.launch {
-            Log.d("coroutine:", "started dogs")
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
-            val list = MockRepository.getDogs()
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
-            Log.d("coroutine:", "completed dogs")
+            try {
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
+                val list = MockRepository.getDogs()
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
+            } catch (e: CancellationException) {
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorDogs("This job has been cancelled."))
+            }
+
         }
 
         val jobCats = scope.launch {
-            Log.d("coroutine:", "started cats")
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
-            val list = MockRepository.getCats()
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
-            Log.d("coroutine:", "completed cats")
+            try {
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
+                val list = MockRepository.getCats()
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
+            } catch (e: CancellationException) {
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorCats("This job has been cancelled."))
+            }
+
         }
 
         val jobBirds = scope.launch {
-            Log.d("coroutine:", "started birds")
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
-            val list = MockRepository.getBirdsWithError()
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
-            Log.d("coroutine:", "completed birds")
+            try {
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
+                val list = MockRepository.getBirdsWithError()
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
+            } catch (e: CancellationException) {
+                sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorBirds("This job has been cancelled."))
+            }
         }
 
         jobDogs.join()
@@ -107,7 +110,6 @@ class CoroutineExceptionHandlerViewModel :
         jobBirds.join()
 
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCompleted)
-        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorDogs("This job has been cancelled."))
         Log.d("coroutine:", "jobDogs.isActive ${jobDogs.isActive}, jobDogs.isCompleted ${jobDogs.isCompleted}")
         Log.d("coroutine:", "jobCats.isActive ${jobCats.isActive}, jobCats.isCompleted ${jobCats.isCompleted}")
         Log.d("coroutine:", "jobBirds.isActive ${jobBirds.isActive}, jobBirds.isCompleted ${jobBirds.isCompleted}")
@@ -119,27 +121,21 @@ class CoroutineExceptionHandlerViewModel :
         viewModelScope.launch(exceptionHandler) {
             supervisorScope {
                 launch {
-                    Log.d("coroutine:", "started dogs")
                     sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
                     val list = MockRepository.getDogs()
                     sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
-                    Log.d("coroutine:", "completed dogs")
                 }
 
                 launch {
-                    Log.d("coroutine:", "started cats")
                     sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
                     val list = MockRepository.getCats()
                     sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
-                    Log.d("coroutine:", "completed cats")
                 }
 
                 launch {
-                    Log.d("coroutine:", "started birds")
                     sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
                     val list = MockRepository.getBirdsWithError()
                     sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
-                    Log.d("coroutine:", "completed birds")
                 }
 
             }
@@ -151,64 +147,39 @@ class CoroutineExceptionHandlerViewModel :
         val parentJob = viewModelScope.launch(exceptionHandler) {
             coroutineScope {
                 launch {
-                    Log.d("coroutine:", "started dogs")
-                    sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
-                    val list = MockRepository.getDogs()
-                    sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
-                    Log.d("coroutine:", "completed dogs")
+                    try {
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
+                        val list = MockRepository.getDogs()
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
+                    } catch (e: CancellationException) {
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorDogs("This job has been cancelled."))
+                    }
                 }
 
                 launch {
-                    Log.d("coroutine:", "started cats")
-                    sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
-                    val list = MockRepository.getCats()
-                    sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
-                    Log.d("coroutine:", "completed cats")
+                    try {
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
+                        val list = MockRepository.getCats()
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
+                    } catch (e: CancellationException) {
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorCats("This job has been cancelled."))
+                    }
                 }
 
                 launch {
-                    Log.d("coroutine:", "started birds")
-                    sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
-                    val list = MockRepository.getBirdsWithError()
-                    sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
-                    Log.d("coroutine:", "completed birds")
+                    try {
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
+                        val list = MockRepository.getBirdsWithError()
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
+                    } catch (e: CancellationException) {
+                        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorBirds("This job has been cancelled."))
+                    }
                 }
             }
         }
 
         parentJob.join()
         sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCompleted)
-        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.ErrorDogs("This job has been cancelled."))
-
-    }
-
-    suspend fun getData3() {
-        sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingStarted)
-
-        val jobDogs = viewModelScope.launch(exceptionHandler) {
-            Log.d("coroutine:", "started dogs")
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingDogs)
-            val list = MockRepository.getDogs()
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedDogs(list))
-            Log.d("coroutine:", "completed dogs")
-        }
-
-        val jobCats = viewModelScope.launch(exceptionHandler) {
-            Log.d("coroutine:", "started cats")
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingCats)
-            val list = MockRepository.getCats()
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedCats(list))
-            Log.d("coroutine:", "completed cats")
-        }
-
-        val jobBirds = viewModelScope.launch(exceptionHandler) {
-            Log.d("coroutine:", "started birds")
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.LoadingBirds)
-            val list = MockRepository.getBirdsWithError()
-            sendEvent(AnimalsUiStateManager.AnimalsScreenEvent.CompletedBirds(list))
-            Log.d("coroutine:", "completed birds")
-        }
-
     }
 
 }

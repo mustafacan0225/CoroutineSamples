@@ -22,16 +22,17 @@ import com.mustafacan.coroutinesamples.ui.common.composable.BirdsContent
 import com.mustafacan.coroutinesamples.ui.common.composable.CatsContent
 import com.mustafacan.coroutinesamples.ui.common.composable.CompletionTimeInfo
 import com.mustafacan.coroutinesamples.ui.common.composable.DogsContent
+import com.mustafacan.coroutinesamples.ui.model.ParallelCallAsyncSampleType
 import kotlinx.coroutines.launch
 
 @Composable
-fun ParallelCallWithAsyncScreen() {
+fun ParallelCallWithAsyncScreen(sampleType: String, sampleTitle: String) {
     val viewModel = ParallelCallWithAsyncViewModel()
     val coroutineScope = rememberCoroutineScope()
     val state = viewModel.state.collectAsStateWithLifecycle()
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 10.dp)) {
 
-        Text(text = "Parallel Call With Async", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(text = sampleTitle, fontSize = 18.sp, fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -44,7 +45,12 @@ fun ParallelCallWithAsyncScreen() {
         CompletionTimeInfo(state = state)
 
         Button(modifier = Modifier.padding(top = 15.dp).align(Alignment.CenterHorizontally), onClick = {
-            coroutineScope.launch { viewModel.getAllData() }
+            coroutineScope.launch {
+                if (sampleType.equals(ParallelCallAsyncSampleType.ASYNC_WITH_COROUTINE_SCOPE.name))
+                    viewModel.getAllAnimals()
+                else if (sampleType.equals(ParallelCallAsyncSampleType.ASYNC.name))
+                    viewModel.parallelCallWithAsync()
+            }
         }) {
             Text(
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
