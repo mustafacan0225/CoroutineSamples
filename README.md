@@ -1,5 +1,4 @@
 #### Coroutine Samples - Jetpack Compose - MVI(MVVM with state management)
-Topics
 <ul>
    <li>Dispatchers</li>
    <li>Parallel Call With Job</li>
@@ -16,6 +15,8 @@ Topics
    <li>withContext(NonCancellable)</li>
    <li>invokeOnCompletion</li>
 </ul>
+<b>Note:</b> Since this application focuses on coroutines, the coroutine codes are located in the viewmodel, but in real scenarios they may be located in the data layer or in different classes depending on the architectural structure of the project.
+<br><br>
 <table>
    <tr>
       <td width="50%">
@@ -108,8 +109,6 @@ Topics
    </tr>
 </table>
 
-
-
 <table>
    <tr>
       <td width="50%">
@@ -138,7 +137,7 @@ Topics
 <table>
    <tr>
       <td width="50%">
-         <b>withContext(NonCancellable)</b> <br> We should use withContext(NonCancellable) for all suspend calls that need to be executed even when a coroutine is in a "Cancelling" state (i.e. even in cancellation state).
+         <b>withContext(NonCancellable)</b> <br> We should use withContext(NonCancellable) for all suspend calls that need to be executed even when a coroutine is in a "Cancelling" state.
          <ul>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/cancellation/CoroutineCancellationViewModel.kt">ViewModel Code</a></li>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/cancellation/CoroutineCancellationScreen.kt">Composable Code</a></li>
@@ -168,7 +167,7 @@ Topics
          </ul>
       </td>
       <td width="50%">
-         <b>Multiple WithContext</b> <br>
+         <b>Multiple WithContext</b> <br>Multiple withContext, runs sequentially.
          <ul>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/withcontext/WithContextViewModel.kt">ViewModel Code</a></li>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/withcontext/MultipleWithContextScreen.kt">Composable Code</a></li>
