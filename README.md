@@ -4,16 +4,16 @@
    <li>Parallel Call With Job</li>
    <li>Parallel Call With Async</li>
    <li>Async With coroutineScope</li>
-   <li>WithContext Sample</li>
-   <li>Multiple WithContext</li>
    <li>Exception With Job</li>
    <li>Exception With SupervisorJob</li>
    <li>Exception With supervisorScope</li>
    <li>Exception With coroutineScope</li>
    <li>Job Cancellation</li>
    <li>Parent Job Cancellation</li>
-   <li>withContext(NonCancellable)</li>
    <li>invokeOnCompletion</li>
+   <li>withContext Sample</li>
+   <li>Multiple withContext</li>
+   <li>withContext(NonCancellable)</li>
 </ul>
 <b>Note:</b> Since this application focuses on coroutines, the coroutine codes are located in the viewmodel, but in real scenarios they may be located in the data layer or in different classes depending on the architectural structure of the project.
 <br><br>
@@ -160,14 +160,14 @@
 <table>
    <tr>
       <td width="50%">
-         <b>WithContext Sample</b> <br>
+         <b>withContext Sample</b> <br>
          <ul>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/withcontext/WithContextViewModel.kt">ViewModel Code</a></li>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/withcontext/WithContextScreen.kt">Composable Code</a></li>
          </ul>
       </td>
       <td width="50%">
-         <b>Multiple WithContext</b> <br>Multiple withContext, runs sequentially.
+         <b>Multiple withContext</b> <br>Multiple withContext, runs sequentially.
          <ul>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/withcontext/WithContextViewModel.kt">ViewModel Code</a></li>
             <li>Show <a target="_blank" href="https://github.com/mustafacan0225/CoroutineSamples/blob/main/app/src/main/java/com/mustafacan/coroutinesamples/ui/samples/withcontext/MultipleWithContextScreen.kt">Composable Code</a></li>
